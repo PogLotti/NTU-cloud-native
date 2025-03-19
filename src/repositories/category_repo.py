@@ -16,21 +16,20 @@ class CategoryRepository:
         return [listing[0] for listing in self.categories[category]] # return listing_id
         
     def get_top_category(self):
-
         if not self.categories:
             return None
 
-        # 計算每個分類的數量
         cat_count = {category: len(listings) for category, listings in self.categories.items()}
 
-        # 先按數量排序，再按字母倒序排列
-        return max(sorted(cat_count.keys(), reverse=True), key=cat_count.get)
+        max_count = max(cat_count.values())
+        top_categories = [category for category, count in cat_count.items() if count == max_count]
 
+        return top_categories
+    
     def remove_listing_from_category(self, category, listing_id):
         if category not in self.categories:
-            return  # 沒有該分類，什麼都不做
+            return  
 
-        # 從分類中移除對應的 listing_id
         self.categories[category] = [
             listing for listing in self.categories[category] if listing[0] != listing_id
         ]

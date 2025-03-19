@@ -35,4 +35,7 @@ class CategoryService:
             return "Error - unknown user"
 
         top_category = self.category_repo.get_top_category()
-        return top_category if top_category else "Error - category not found"
+        if top_category:
+                return ", ".join(top_category)  # Join the list into a string
+        else:
+            return "Error - category not found"
